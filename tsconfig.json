@@ -4,6 +4,7 @@
         "target" : "ESNext",				// <= target ES version ("ESNext" is latest)
         "watch" : true,				// <= enable/disable live compilation (disabled if not specified)
         "lib": [ "dom", "es2017"],			// <= integrate intellisense, documentation and autocomplete features for libraries needed for a project
-        "allowSyntheticDefaultImports":true 
+        "allowSyntheticDefaultImports":true,
+        "moduleResolution": "node"
     }
  }
