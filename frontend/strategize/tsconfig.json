@@ -5,7 +5,10 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ],
+    ],"baseUrl": "./",
+    "paths": {
+      "@reduxjs/toolkit": ["./node_modules/@reduxjs/toolkit"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
