@@ -3,34 +3,50 @@ import expressAsyncHandler from '../../node_modules/express-async-handler/index.
 import mongoose from 'mongoose';
 import projectModel from '../models/projectModel.js';
 
-//TODO: this will need to be repurposed for getting all projects of the logged in user
-export const getter : RequestHandler = expressAsyncHandler(async (req: Request, res: Response)  => { 
-    const allDocs : any = await projectModel.find();
+
+export const getAllProjects : RequestHandler = expressAsyncHandler(async (req: Request | any, res: Response)  => { 
+    const allDocs : any = await projectModel.find({owner: req.user.id}); //! Should it be 'req.user._id' ???
     console.log(allDocs);
     res.json(allDocs);
 });
 
 //Create new (POST)
-export const createNewProject : RequestHandler = expressAsyncHandler(async (req : Request, res : Response) => {
-    const newProject : mongoose.Document = await projectModel.create(req.body);
+export const createNewProject : RequestHandler = expressAsyncHandler(async (req : any | Request, res : Response) => {
+    if (!req.body.data) {
+        res.status(400);
+        console.log('Data is missing in the request!');
+        throw new Error('Data is missing in the request!');
+    }
+
+    const newProject : mongoose.Document = await projectModel.create({data: req.body.data, owner: req.user.id}); //! Should it be 'req.user._id' ???
     res.json(newProject);
 })
 
 //Retrieve by ID (GET)
-export const getProjectById : RequestHandler = expressAsyncHandler(async (req : Request, res : Response) => {
-    const allDocs : any = await projectModel.findById({_id: req.params.id});
-    console.log(allDocs);
-    res.json(allDocs);
+export const getProjectById : RequestHandler = expressAsyncHandler(async (req : any | Request, res : Response) => {
+    if (!req.params.id){
+        res.status(400);
+        throw new Error('Can not retrieve document! request FAILED')
+    }
+
+    const project : any = await projectModel.findOne({_id: req.params.id, owner: req.user._id}); //! Should it be 'req.user.id' ???
+    console.log(project);
+    res.status(200).json(project);
 })
 
-export const updateProjectById : RequestHandler = expressAsyncHandler(async (req : Request, res : Response) => {
-    const Doc : any = await projectModel.findByIdAndUpdate({_id: req.params.id}, req.body);
-    console.log(Doc);
-    res.json(Doc);
+export const updateProjectById : RequestHandler = expressAsyncHandler(async (req : Request | any, res : Response) => {
+    if (!req.params.id){
+        res.status(400);
+        throw new Error('Can not retrieve document! request FAILED')
+    }
+
+    const project : any = await projectModel.findOneAndUpdate({_id: req.params.id, owner: req.user._id}, req.body); //! Should it be 'req.user.id' ???
+    console.log(project);
+    res.json(project);
 })
 
-export const deleteProjectById : RequestHandler = expressAsyncHandler(async (req : Request, res : Response) => {
-    const Doc : any = await projectModel.findByIdAndDelete({_id: req.params.id});
-    console.log(Doc);
-    res.json(Doc);
+export const deleteProjectById : RequestHandler = expressAsyncHandler(async (req : Request | any , res : Response) => {
+    const project : any = await projectModel.findOneAndDelete({_id: req.params.id, owner: req.user._id}); //! Should it be 'req.user.id' ???
+    console.log(project);
+    res.json(project);
 })

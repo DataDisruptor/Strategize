@@ -1,12 +1,12 @@
 import express from 'express';
-import { getter, createNewProject, getProjectById, updateProjectById, deleteProjectById } from '../controllers/projectsController.js';
+import { getAllProjects, createNewProject, getProjectById, updateProjectById, deleteProjectById } from '../controllers/projectsController.js';
+import { protectRoute } from '../middleware/authMiddleware.js';
 const router = express.Router();
 router.route("/")
-    .get(getter)
-    .post(createNewProject);
+    .get(protectRoute, getAllProjects)
+    .post(protectRoute, createNewProject);
 router.route("/:id")
-    .get(getProjectById)
-    .put(updateProjectById)
-    .delete(deleteProjectById);
-//TODO: then, authentication and associate User with Project
+    .get(protectRoute, getProjectById)
+    .put(protectRoute, updateProjectById)
+    .delete(protectRoute, deleteProjectById);
 export default router;

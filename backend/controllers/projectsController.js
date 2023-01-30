@@ -1,29 +1,41 @@
 import expressAsyncHandler from '../../node_modules/express-async-handler/index.js';
 import projectModel from '../models/projectModel.js';
-//TODO: this will need to be repurposed for getting all projects of the logged in user
-export const getter = expressAsyncHandler(async (req, res) => {
-    const allDocs = await projectModel.find();
+export const getAllProjects = expressAsyncHandler(async (req, res) => {
+    const allDocs = await projectModel.find({ owner: req.user.id }); //! Should it be 'req.user._id' ???
     console.log(allDocs);
     res.json(allDocs);
 });
 //Create new (POST)
 export const createNewProject = expressAsyncHandler(async (req, res) => {
-    const newProject = await projectModel.create(req.body);
+    if (!req.body.data) {
+        res.status(400);
+        console.log('Data is missing in the request!');
+        throw new Error('Data is missing in the request!');
+    }
+    const newProject = await projectModel.create({ data: req.body.data, owner: req.user.id }); //! Should it be 'req.user._id' ???
     res.json(newProject);
 });
 //Retrieve by ID (GET)
 export const getProjectById = expressAsyncHandler(async (req, res) => {
-    const allDocs = await projectModel.findById({ _id: req.params.id });
-    console.log(allDocs);
-    res.json(allDocs);
+    if (!req.params.id) {
+        res.status(400);
+        throw new Error('Can not retrieve document! request FAILED');
+    }
+    const project = await projectModel.findOne({ _id: req.params.id, owner: req.user._id }); //! Should it be 'req.user.id' ???
+    console.log(project);
+    res.status(200).json(project);
 });
 export const updateProjectById = expressAsyncHandler(async (req, res) => {
-    const Doc = await projectModel.findByIdAndUpdate({ _id: req.params.id }, req.body);
-    console.log(Doc);
-    res.json(Doc);
+    if (!req.params.id) {
+        res.status(400);
+        throw new Error('Can not retrieve document! request FAILED');
+    }
+    const project = await projectModel.findOneAndUpdate({ _id: req.params.id, owner: req.user._id }, req.body); //! Should it be 'req.user.id' ???
+    console.log(project);
+    res.json(project);
 });
 export const deleteProjectById = expressAsyncHandler(async (req, res) => {
-    const Doc = await projectModel.findByIdAndDelete({ _id: req.params.id });
-    console.log(Doc);
-    res.json(Doc);
+    const project = await projectModel.findOneAndDelete({ _id: req.params.id, owner: req.user._id }); //! Should it be 'req.user.id' ???
+    console.log(project);
+    res.json(project);
 });

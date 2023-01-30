@@ -1,12 +1,24 @@
 import express from 'express';
-import { getter, createNewUser, getUserById, updateUserById, deleteUserById } from '../controllers/userController.js';
+import { createNewUser, loginExistingUser, getCurrentUser, getUserById, getter, updateUserById, deleteUserById } from '../controllers/userController.js';
+import { protectRoute } from '../middleware/authMiddleware.js';
 
 const router : express.Router = express.Router();
 
 router.route("/")
 .get(getter)
+
+//-----------------------------------------------------
+
+router.route("/register")
 .post(createNewUser)
 
+router.route("/login")
+.post(loginExistingUser)
+
+router.route("/current-user")
+.get(protectRoute, getCurrentUser)
+
+//-----------------------------------------------------
 router.route("/:id")
 .get(getUserById)
 .put(updateUserById)
