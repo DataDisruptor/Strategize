@@ -4,12 +4,14 @@ import UserRouter from './routes/userRoute.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
+import cors from 'cors'
 
 dotenv.config();
 connectDB();
 
 const app : express.Application = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 app.use("/api/projects", ProjectRouter);

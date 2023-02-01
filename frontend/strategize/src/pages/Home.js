@@ -1,5 +1,70 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'src/app/hooks';
+import { logout, reset } from 'src/app/state_management/user/authSlice';
 function Home() {
-    return (<div>Home PAGE!!!!!!!!!!!!!!</div>);
+    //! To be migrated!! ------------------------------------------------------------------------------------------------------------------------
+    const [formData, setFormData] = useState({
+        data: '',
+    });
+    const { data } = formData;
+    const onFormUpdated = (e) => {
+        e.preventDefault();
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
+    };
+    const onFormSubmitted = (e) => {
+        e.preventDefault();
+        if (null) {
+            throw new Error("Please enter all fields!");
+        }
+        else {
+            console.log("trying to login...");
+            console.log(formData);
+        }
+    };
+    const onLogoutClicked = () => {
+        dispatch(logout());
+        dispatch(reset());
+        navigator('/');
+    };
+    //! Immigrants Border ------------------------------------------------------------------------------------------------------------------------
+    const navigator = useNavigate();
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector((state) => state.auth);
+    useEffect(() => {
+        if (!user) {
+            navigator('/login');
+        }
+    }, [user, navigator]);
+    return (<section>
+      {user && <div>
+        <h1>Welcome</h1>
+        <p>
+          Name: {user.name}
+        </p>
+        <p>
+          Email : {user.email}
+        </p>
+        <p>
+          <button onClick={onLogoutClicked}>Logout</button>
+        </p>
+      </div>}
+      <div>
+        <form onSubmit={(e) => onFormSubmitted(e)}>
+            <input className="form-input" type="email" placeholder="Project Name" id="data" name="data" value={data} onChange={(e) => { onFormUpdated(e); }}/>
+            <button type='submit'>Login</button>
+        </form>  
+        <h2><button>Create New Project</button></h2>
+        
+        
+        
+      </div>
+      <div>
+        <h4>Existing Projects</h4>
+      </div>
+    </section>);
 }
 export default Home;
