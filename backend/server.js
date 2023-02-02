@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import cors from 'cors';
 import path from 'path';
-//fix Node's "path" to support ESModules instead of CJS
+//fix Node's "path" to support ESModules instead of CJS.
 import * as url from 'url';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
