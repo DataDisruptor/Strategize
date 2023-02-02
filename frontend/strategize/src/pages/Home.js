@@ -37,7 +37,7 @@ function Home() {
         console.log(id);
         dispatch(updateProject({ projectName: projectName, id: id, token: user.token }));
     };
-    //! Immigrants Border ------------------------------------------------------------------------------------------------------------------------
+    //! Immigrants Border -----------------------------------------------------------------------------------------------------------------------
     const navigator = useNavigate();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.auth);
