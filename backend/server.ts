@@ -1,4 +1,3 @@
-
 import express from 'express';
 import ProjectRouter from './routes/projectsRoute.js';
 import UserRouter from './routes/userRoute.js';
@@ -7,16 +6,19 @@ import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import cors from 'cors'
 import path from 'path';
+import mongodb from 'mongodb';
 
 //fix Node's "path" to support ESModules instead of CJS.
 import * as url from 'url';
+
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-
+const client = new mongodb.MongoClient (process.env.MONGO_URI);
+const dbName = 'strategizedb';
 
 dotenv.config();
-connectDB();
+//connectDB();
 
 const app  = express();
 
@@ -46,6 +48,10 @@ else{
 
 //Start server
 const PORT : any = process.env.PORT || 4000;
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+client.connect().then(() => {
+    global.db = client.db(dbName);
+
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}`);
+    })
 })
