@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction, Slice, ThunkAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from 'src/app/store';
 import { registerUser, logoutUser, loginUser } from './authService';
-import { AsyncThunk, BaseThunkAPI } from '@reduxjs/toolkit/dist/createAsyncThunk';
+
 
 export interface User {
     user: {};

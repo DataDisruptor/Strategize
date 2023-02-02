@@ -11,14 +11,14 @@ interface IProject {
     data: string;
 
     //critical data
-    StationType : 'Project';
-    StationTypeName : string,
-    ProjectName : string,
-    ProjectIconImg : string
-    Members : mongoose.Schema.Types.ObjectId[],
-    LongTermGoals : [],//LTG,
-    ProjectCalendar : Date,
-    Description : string,
+    stationType : 'Project';
+    stationTypeName : string,
+    projectName : string,
+    projectIconImg : string
+    members : mongoose.Schema.Types.ObjectId[],
+    longTermGoals : [],//LTG,
+    projectCalendar : Date,
+    description : string,
     Notes : string[],
     HISTORY_LTGsAchieved : []
 }
@@ -29,21 +29,22 @@ const modelSchema = new mongoose.Schema<IProject>({
         required: [true, 'post must be associated with a user ID'],
         ref: 'users'
     },
+    projectName: {
+        type: String,
+        required: [true, '\'projectName\' field is mandatory! please provide it in order to create a new instance of this document type!']
+    },
     data: {
         type: String,
-        required: [true, 'This field is mandatory! please provide it in order to create a new instance of this document type!']
+        //required: [true, 'This field is mandatory! please provide it in order to create a new instance of this document type!']
     },
-    StationType: {
+    stationType: {
         type: String,
         //required: [true, '\'StationType\' field is mandatory! please provide it in order to create a new instance of this document type!']
     },
-    StationTypeName: {
+    stationTypeName: {
         type: String
     },
-    ProjectName: {
-        type: String
-    },
-    Description: {
+    description: {
         type: String
     }
 }, {

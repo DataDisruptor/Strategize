@@ -5,21 +5,22 @@ const modelSchema = new mongoose.Schema({
         required: [true, 'post must be associated with a user ID'],
         ref: 'users'
     },
+    projectName: {
+        type: String,
+        required: [true, '\'projectName\' field is mandatory! please provide it in order to create a new instance of this document type!']
+    },
     data: {
         type: String,
-        required: [true, 'This field is mandatory! please provide it in order to create a new instance of this document type!']
+        //required: [true, 'This field is mandatory! please provide it in order to create a new instance of this document type!']
     },
-    StationType: {
+    stationType: {
         type: String,
         //required: [true, '\'StationType\' field is mandatory! please provide it in order to create a new instance of this document type!']
     },
-    StationTypeName: {
+    stationTypeName: {
         type: String
     },
-    ProjectName: {
-        type: String
-    },
-    Description: {
+    description: {
         type: String
     }
 }, {

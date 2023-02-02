@@ -12,13 +12,13 @@ export const getAllProjects : RequestHandler = expressAsyncHandler(async (req: R
 
 //Create new (POST)
 export const createNewProject : RequestHandler = expressAsyncHandler(async (req : any | Request, res : Response) => {
-    if (!req.body.data) {
+    if (!req.body.projectName) {
         res.status(400);
-        console.log('Data is missing in the request!');
-        throw new Error('Data is missing in the request!');
+        console.log('projectName is missing in the request!');
+        throw new Error('projectName is missing in the request!');
     }
 
-    const newProject : mongoose.Document = await projectModel.create({data: req.body.data, owner: req.user.id}); //! Should it be 'req.user._id' ???
+    const newProject : mongoose.Document = await projectModel.create({projectName: req.body.projectName, owner: req.user.id}); //! Should it be 'req.user._id' ???
     res.json(newProject);
 })
 

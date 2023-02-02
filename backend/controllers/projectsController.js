@@ -7,12 +7,12 @@ export const getAllProjects = expressAsyncHandler(async (req, res) => {
 });
 //Create new (POST)
 export const createNewProject = expressAsyncHandler(async (req, res) => {
-    if (!req.body.data) {
+    if (!req.body.projectName) {
         res.status(400);
-        console.log('Data is missing in the request!');
-        throw new Error('Data is missing in the request!');
+        console.log('projectName is missing in the request!');
+        throw new Error('projectName is missing in the request!');
     }
-    const newProject = await projectModel.create({ data: req.body.data, owner: req.user.id }); //! Should it be 'req.user._id' ???
+    const newProject = await projectModel.create({ projectName: req.body.projectName, owner: req.user.id }); //! Should it be 'req.user._id' ???
     res.json(newProject);
 });
 //Retrieve by ID (GET)
