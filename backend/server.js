@@ -37,7 +37,7 @@ else {
 // const dbName = 'strategizedb';
 const PORT = process.env.PORT || 4000;
 // client.connect().then(() => {
-//      global.db = client.db(dbName);
+//       global.db = client.db(dbName);
 // })
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

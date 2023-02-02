@@ -50,7 +50,7 @@ else{
 // const dbName = 'strategizedb';
  const PORT : any = process.env.PORT || 4000;
 // client.connect().then(() => {
-//      global.db = client.db(dbName);
+//       global.db = client.db(dbName);
 
     
 // })
