@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "./frontend/strategize/build"
+      "dest": "./frontend/strategize/build/index.html"
     }
   ]
 }
