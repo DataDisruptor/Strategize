@@ -40,7 +40,6 @@ app.use((req, res: any, next) => {
 // if (process.env.NODE_ENV === 'production')
 // {
 //     app.use(express.static(path.join(__dirname, '../frontend/strategize/build')));
-
 //     app.get('*', (req, res) => {
 //         res.sendFile(
 //             path.resolve(__dirname, '../', 'frontend', 'strategize', 'build', 'index.html')
@@ -56,12 +55,10 @@ app.use((req, res: any, next) => {
 //Start server
 // const client = new mongodb.MongoClient (process.env.MONGO_URI);
 // const dbName = 'strategizedb';
-
 // client.connect().then(() => {
 //       global.db = client.db(dbName);
-
-    
 // })
+
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 })
