@@ -37,20 +37,20 @@ app.use((req, res: any, next) => {
   });
 
 //Serve Frontend
-// if (process.env.NODE_ENV === 'production')
-// {
-//     app.use(express.static(path.join(__dirname, '../frontend/strategize/build')));
-//     app.get('*', (req, res) => {
-//         res.sendFile(
-//             path.resolve(__dirname, '../', 'frontend', 'strategize', 'build', 'index.html')
-//         );
-//     });
-// }
-// else{
-//     app.get('/', (req,res) => {
-//         res.send('Please set to production environment')
-//     })
-// }
+if (process.env.NODE_ENV === 'production')
+{
+    app.use(express.static(path.join(__dirname, '../frontend/strategize/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname, '../', 'frontend', 'strategize', 'build', 'index.html')
+        );
+    });
+}
+else{
+    app.get('/', (req,res) => {
+        res.send('Please set to production environment')
+    })
+}
 
 //Start server
 // const client = new mongodb.MongoClient (process.env.MONGO_URI);
