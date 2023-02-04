@@ -15,13 +15,15 @@ dotenv.config();
 connectDB();
 const PORT = process.env.PORT || 4000;
 const app = express();
-//! exclude frontend/ from git ignore, and push to 2 separate repositories, with the folder directory to have the BE and FE resource available locally ("./")
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/projects", ProjectRouter);
 app.use("/api/user", UserRouter);
 app.use(errorHandler);
+app.get('/', (req, res) => {
+    res.send('CONNECTED!');
+});
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
