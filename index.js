@@ -37,9 +37,9 @@ app.use((req, res, next) => {
 });
 //Serve Frontend
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, './frontend/strategize/build')));
+    app.use(express.static(path.join(__dirname, '/frontend/strategize/build')));
     app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, './', 'frontend', 'strategize', 'build', 'index.html'));
+        res.sendFile(path.resolve(__dirname, '/', 'frontend', 'strategize', 'build', 'index.html'));
     });
 }
 else {
